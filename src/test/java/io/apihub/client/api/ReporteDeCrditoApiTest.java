@@ -45,7 +45,6 @@ public class ReporteDeCrditoApiTest {
     @Test
     public void getReporteTest() throws ApiException {
 
-        Boolean xFullReport = true;
         PersonaPeticion body = new PersonaPeticion();
         body.setPrimerNombre("XXXXXX");
         body.setApellidoPaterno("XXXXXX");
@@ -65,54 +64,9 @@ public class ReporteDeCrditoApiTest {
         domicilio.setTipoAsentamiento(CatalogoTipoAsentamiento._28);
         domicilio.setTipoDomicilio(CatalogoTipoDomicilio.C);
         body.setDomicilio(domicilio);
-        Respuesta response = api.getReporte(this.xApiKey, this.username, this.password, body, xFullReport.toString());
+        Respuesta response = api.getReporte(this.xApiKey, this.username, this.password, body);
         Assert.assertTrue(response.getFolioConsulta() != null);
 
-    }
-
-    @Test
-    public void getSegmentedReportTest() throws ApiException {
-        Boolean xFullReport = false;
-        PersonaPeticion body = new PersonaPeticion();
-        body.setPrimerNombre("XXXXXX");
-        body.setApellidoPaterno("XXXXXX");
-        body.setApellidoMaterno("XXXXXX");
-        body.setFechaNacimiento("yyyy-mm-dd");
-        body.setRFC("XXXXXX");
-        body.setNacionalidad("XX");
-        DomicilioPeticion domicilio = new DomicilioPeticion();
-        domicilio.setDireccion("XXXXXX");
-        domicilio.setColoniaPoblacion("XXXXXX");
-        domicilio.setDelegacionMunicipio("XXXXXX");
-        domicilio.setCiudad("XXXXXX");
-        domicilio.setEstado(CatalogoEstados.JAL);
-        domicilio.setCP("XXXXXX");
-        domicilio.setFechaResidencia("yyyy-mm-dd");
-        domicilio.setNumeroTelefono("XXXXXX");
-        domicilio.setTipoAsentamiento(CatalogoTipoAsentamiento._28);
-        domicilio.setTipoDomicilio(CatalogoTipoDomicilio.C);
-        body.setDomicilio(domicilio);
-
-        Respuesta response = api.getReporte(this.xApiKey, this.username, this.password, body, xFullReport.toString());
-
-        Assert.assertTrue(response.getFolioConsulta() != null);
-
-        if (response.getFolioConsulta() != null) {
-            this.folioConsulta = response.getFolioConsulta();
-
-            Creditos creditos = api.getCreditos(this.folioConsulta, this.xApiKey, this.username, this.password);
-            Assert.assertTrue(creditos.getCreditos() != null);
-
-            DomiciliosRespuesta domicilios = api.getDomicilios(this.folioConsulta, this.xApiKey, this.username, this.password);
-            Assert.assertTrue(domicilios.getDomicilios() != null);
-
-            Empleos empleos = api.getEmpleos(this.folioConsulta, this.xApiKey, this.username, this.password);
-            Assert.assertTrue(empleos.getEmpleos() != null);
-
-            Consultas consultas = api.getConsultas(this.folioConsulta, this.xApiKey, this.username, this.password);
-            Assert.assertTrue(consultas.getConsultas() != null);
-
-        }
     }
 
 }
